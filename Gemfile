@@ -1,3 +1,3 @@
-source 'https://rubygems.org' do
-  gem 'httparty'
-end
+source 'https://rubygems.org'
+
+gem 'httparty'
