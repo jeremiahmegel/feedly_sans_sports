@@ -29,20 +29,21 @@ loop do
       item['originId'].include?('/sports/')
     end
 
-  return unless sports_items.any?
+  next unless sports_items.any?
 
-  resp =
-    FeedlyApi.post(
-      '/markers',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: {
-        action: 'markAsRead',
-        type: 'entries',
-        entryIds: sports_items.map { |item| item['id'] }
-      }.to_json
+  FeedlyApi.post(
+    '/markers',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: {
+      action: 'markAsRead',
+      type: 'entries',
+      entryIds: sports_items.map { |item| item['id'] }
+    }.to_json
   )
-
+rescue StandardError => e
+  STDERR.puts e.backtrace
+ensure
   sleep 60 * 15 # 15 minutes
 end
